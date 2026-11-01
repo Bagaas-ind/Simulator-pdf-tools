@@ -38,8 +38,9 @@ Jangan mengarang data pribadi nyata; gunakan placeholder seperti [Nama], [Tangga
 
   try {
     const groq = createGroq({ apiKey });
-    const { text } = await generateText({
-      model: groq("llama-3.3-70b-versatile"),
+       const modelId = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+   const { text } = await generateText({
+     model: groq(modelId),
       system,
       prompt,
       temperature: 0.6,
