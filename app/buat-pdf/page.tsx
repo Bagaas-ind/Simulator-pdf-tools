@@ -1,13 +1,15 @@
 "use client";
 
+import ToolHeader from "@/components/ToolHeader";
+import A4Preview from "@/components/A4Preview";
 import { useState } from "react";
 import { Download, Loader2, Sparkles } from "lucide-react";
 import MarkdownView from "@/components/MarkdownView";
 
 const COLORS = [
+  { name: "Biru", value: "#24569d" },
   { name: "Teal", value: "#0f766e" },
-  { name: "Biru", value: "#1d4ed8" },
-  { name: "Merah", value: "#b91c1c" },
+  { name: "Merah", value: "#9f1d2b" },
 ];
 
 const field =
@@ -42,13 +44,8 @@ export default function BuatPdfPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">AI PDF Generator</h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          Minta dibuatkan dokumen, edit kalau perlu, lalu unduh sebagai PDF A4.
-        </p>
-      </div>
+    <div className="mx-auto max-w-6xl space-y-6 px-4 py-8">
+      <ToolHeader icon={Sparkles} ai title="AI PDF Generator" description="Minta dibuatkan dokumen, edit kalau perlu, lalu unduh sebagai PDF A4." />
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Kiri: input */}
@@ -139,18 +136,15 @@ export default function BuatPdfPage() {
             </button>
           </div>
 
-          <div className="overflow-auto rounded-xl bg-gray-200 p-3 dark:bg-gray-800">
-            {/* Dibungkus agar kertas A4 mengecil di layar, tapi tetap 210mm saat print */}
-            <div className="origin-top-left [zoom:0.55] sm:[zoom:0.7]">
-              <div id="print-area" className="a4-paper shadow-xl">
-                {content.trim() ? (
-                  <MarkdownView source={content} titleColor={color} />
-                ) : (
-                  <p className="text-gray-400">Dokumen akan tampil di sini...</p>
-                )}
-              </div>
+          <A4Preview>
+            <div id="print-area" className="a4-paper shadow-xl">
+              {content.trim() ? (
+                <MarkdownView source={content} titleColor={color} />
+              ) : (
+                <p className="text-gray-400">Dokumen akan tampil di sini...</p>
+              )}
             </div>
-          </div>
+          </A4Preview>
           <p className="mt-2 text-xs text-gray-500">
             Di dialog cetak, pilih tujuan “Simpan sebagai PDF”, ukuran A4, dan matikan “Header dan footer”.
           </p>

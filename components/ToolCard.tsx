@@ -1,38 +1,45 @@
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import type { Tool } from "@/lib/tools";
 
-export type Tool = {
-  title: string;
-  description: string;
-  href: string;
-  category: "Buat" | "Atur halaman" | "Optimasi";
-  badge: "AI" | "Lokal";
-  icon: LucideIcon;
-};
-
-export default function ToolCard({ tool }: { tool: Tool }) {
+/** Satu baris pada daftar alat (gaya indeks editorial). */
+export default function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const Icon = tool.icon;
   return (
     <Link
       href={tool.href}
-      className="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-brand hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+      className="group flex items-start gap-4 border-t border-gray-200 py-7 transition hover:bg-gray-100/60 sm:items-center sm:gap-8 dark:border-gray-800 dark:hover:bg-gray-900/60"
     >
-      <div className="mb-3 flex items-center justify-between">
-        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand">
-          <Icon size={20} />
-        </span>
+      <span className="w-8 shrink-0 pt-1 font-display text-xl text-gray-400 sm:w-12 sm:pt-0 sm:text-2xl">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+
+      <div className="min-w-0 flex-1 sm:grid sm:grid-cols-[1fr_1.3fr] sm:items-center sm:gap-8">
+        <h3 className="flex items-center gap-3 font-display text-2xl leading-tight sm:text-3xl">
+          {tool.title}
+        </h3>
+        <p className="mt-2 text-sm leading-relaxed text-gray-600 sm:mt-0 dark:text-gray-400">
+          {tool.description}
+        </p>
+      </div>
+
+      <div className="flex shrink-0 items-center gap-4 pt-1.5 sm:pt-0">
         <span
-          className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          className={`hidden items-center gap-1.5 rounded border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wider sm:inline-flex ${
             tool.badge === "AI"
-              ? "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
-              : "bg-brand/10 text-brand"
+              ? "border-accent/40 text-accent"
+              : "border-gray-300 text-gray-500 dark:border-gray-700"
           }`}
         >
+          <Icon size={12} strokeWidth={1.75} />
           {tool.badge}
         </span>
+        <ArrowUpRight
+          size={22}
+          strokeWidth={1.5}
+          className="text-gray-400 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+        />
       </div>
-      <h3 className="font-semibold group-hover:text-brand">{tool.title}</h3>
-      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{tool.description}</p>
     </Link>
   );
 }

@@ -23,9 +23,9 @@ export default function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Ganti mode gelap/terang"
-      className="rounded-lg border border-gray-200 p-2 text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+      className="rounded-md p-2 text-gray-500 transition hover:text-gray-900 dark:hover:text-white"
     >
-      {dark ? <Sun size={18} /> : <Moon size={18} />}
+      {dark ? <Sun size={18} strokeWidth={1.5} /> : <Moon size={18} strokeWidth={1.5} />}
     </button>
   );
 }

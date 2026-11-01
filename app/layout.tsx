@@ -1,11 +1,24 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import "@fontsource-variable/inter";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Saroka PDF Tools",
+  title: {
+    default: "Saroka PDF Tools: buat, gabung, pisah, dan kompres PDF",
+    template: "%s | Saroka PDF Tools",
+  },
   description:
-    "Buat, gabung, pisah, dan kompres PDF langsung di browser. File tidak diunggah ke server.",
+    "Buat dokumen dengan AI, gabung, pisah, dan kompres PDF langsung di browser. Gratis, tanpa akun, file tidak diunggah ke server.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#24569d",
 };
 
 const themeScript = `
@@ -24,9 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen bg-[#f9fafb] text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+      <body className="flex min-h-screen flex-col bg-page font-sans text-gray-900 antialiased dark:text-gray-100">
         <Header />
-        <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );

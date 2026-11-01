@@ -1,7 +1,8 @@
 "use client";
 
+import ToolHeader from "@/components/ToolHeader";
 import { useState } from "react";
-import { FileText } from "lucide-react";
+import { FileText, Minimize2 } from "lucide-react";
 import PdfDropzone from "@/components/PdfDropzone";
 import { compressPdf, downloadPdf, formatSize, type PdfItem } from "@/lib/pdf";
 
@@ -28,13 +29,8 @@ export default function KompresPage() {
   const percent = file && result && file.size > 0 ? Math.round((saved / file.size) * 100) : 0;
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Kompres PDF</h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          Optimasi struktur file di browser. Hasil terbaik untuk PDF yang belum dioptimasi.
-        </p>
-      </div>
+    <div className="mx-auto max-w-3xl space-y-6 px-4 py-8">
+      <ToolHeader icon={Minimize2} title="Kompres PDF" description="Optimasi struktur file di browser. Hasil terbaik untuk PDF yang belum dioptimasi." />
 
       <PdfDropzone
         multiple={false}

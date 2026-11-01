@@ -1,5 +1,6 @@
 "use client";
 
+import ToolHeader from "@/components/ToolHeader";
 import { useState } from "react";
 import { ArrowDown, ArrowUp, Combine, FileText, Scissors, X } from "lucide-react";
 import PdfDropzone from "@/components/PdfDropzone";
@@ -68,11 +69,8 @@ export default function OlahPdfPage() {
     }`;
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Olah PDF</h1>
-        <p className="text-gray-500 dark:text-gray-400">Gabung atau pisah PDF, 100% di browser.</p>
-      </div>
+    <div className="mx-auto max-w-3xl space-y-6 px-4 py-8">
+      <ToolHeader icon={Combine} title="Olah PDF" description="Gabung atau pisah PDF, 100% di browser." />
 
       <div className="flex gap-2">
         <button
