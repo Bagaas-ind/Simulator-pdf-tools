@@ -37,3 +37,4 @@ Ikuti langkah ini jika kamu ingin menjalankan proyek ini di komputermu:
    git clone https://github.com/Bagaas-ind/Simulator-pdf-tools.git
    cd Simulator-pdf-tools
 Tes Badge Quickdraw
+Pull Shark
