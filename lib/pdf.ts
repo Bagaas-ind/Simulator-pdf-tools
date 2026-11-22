@@ -1,4 +1,4 @@
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, degrees } from "pdf-lib";
 
 export type PdfItem = {
   id: string;
@@ -123,4 +123,15 @@ export async function compressPdf(item: PdfItem): Promise<Uint8Array> {
   doc.setProducer("");
   doc.setCreator("");
   return doc.save({ useObjectStreams: true, addDefaultPage: false });
+}
+
+
+/** Putar seluruh halaman PDF di browser tanpa mengunggah file. */
+export async function rotatePdf(item: PdfItem, angle: 90 | 180 | 270): Promise<Uint8Array> {
+  const doc = await PDFDocument.load(item.bytes);
+  for (const page of doc.getPages()) {
+    const current = page.getRotation().angle;
+    page.setRotation(degrees((current + angle) % 360));
+  }
+  return doc.save({ useObjectStreams: true });
 }
