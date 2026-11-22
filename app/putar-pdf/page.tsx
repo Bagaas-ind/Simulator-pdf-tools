@@ -20,7 +20,7 @@ export default function RotatePdfPage() {
     setError("");
     try {
       const output = await rotatePdf(file, angle);
-      downloadPdf(output, `${file.name.replace(/\\.pdf$/i, "")}-rotated.pdf`);
+      downloadPdf(output, `${file.name.replace(/\.pdf$/i, "")}-rotated.pdf`);
     } catch {
       setError("PDF tidak dapat diputar. Pastikan file tidak rusak atau terkunci.");
     } finally {
