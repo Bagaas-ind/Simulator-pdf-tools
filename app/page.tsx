@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Combine, FileOutput, FileText, Minimize2, RotateCw, Scissors, ShieldCheck, Sparkles, WandSparkles, Zap } from "lucide-react";
 import { tools } from "@/lib/tools";
+import QuickPdfPreview from "@/components/QuickPdfPreview";
 
 const iconMap = [Sparkles, Minimize2, Combine, Scissors, RotateCw];
 const highlights = [
@@ -52,7 +53,7 @@ export default function HomePage() {
       <section className="drop-banner">
         <div className="drop-icon"><FileOutput size={24}/></div>
         <div className="min-w-0 flex-1"><p className="eyebrow">QUICK ACCESS</p><h2>Punya PDF yang ingin diolah?</h2><p>Buka workspace alat untuk mengunggah, melihat detail file, dan memilih tindakan yang tepat.</p></div>
-        <Link href="/alat" className="btn-primary shrink-0">Pilih file PDF <ArrowUpRight size={16}/></Link>
+        <div className="w-full"><QuickPdfPreview /></div>
       </section>
 
       <section className="benefit-grid">
