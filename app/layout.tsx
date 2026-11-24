@@ -8,11 +8,10 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Saroka PDF Tools: buat, gabung, pisah, dan kompres PDF",
-    template: "%s | Saroka PDF Tools",
+    default: "SAROKA — AI PDF & Document Workspace",
+    template: "%s | SAROKA PDF Tools",
   },
-  description:
-    "Buat dokumen dengan AI, gabung, pisah, dan kompres PDF langsung di browser. Gratis, tanpa akun, file tidak diunggah ke server.",
+  description: "Ruang kerja dokumen untuk bertanya dan merangkum PDF dengan AI, membuat dokumen, serta mengelola halaman PDF langsung di browser.",
 };
 
 export const viewport: Viewport = {
@@ -32,16 +31,7 @@ const themeScript = `
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="id" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body className="flex min-h-screen flex-col bg-page font-sans text-gray-900 antialiased dark:text-gray-100">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
-    </html>
-  );
+  return <html lang="id" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
+    <body className="flex min-h-screen flex-col bg-page font-sans text-gray-900 antialiased dark:text-gray-100"><Header/><main className="flex-1">{children}</main><Footer/></body>
+  </html>;
 }
