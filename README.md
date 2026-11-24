@@ -64,7 +64,9 @@ Aplikasi PDF berbasis web dengan AI Generator dan pemrosesan file langsung di br
 - API key Groq disimpan sebagai environment variable di sisi server. Jangan gunakan prefix `NEXT_PUBLIC_` untuk secret key.
 - Hindari memasukkan data rahasia atau informasi pribadi sensitif ke dalam prompt AI.
 
-> **Kompresi PDF:** Menggunakan Ghostscript WebAssembly di browser dengan preset Ringan (300 DPI), Seimbang (150 DPI), dan Kuat (96 DPI). Ukuran hasil bergantung pada isi dokumen. Penulisan ulang PDF dapat memengaruhi formulir, anotasi, bookmark, aksesibilitas, atau tanda tangan digital; simpan dokumen asli. File PDF tidak dikirim ke server.\n\n> **Lisensi:** Proyek ini menggunakan AGPL-3.0. Mesin Ghostscript dan komponen pihak ketiga memiliki pemberitahuan lisensi masing-masing yang disalin ke `public/licenses/ghostscript/` saat instalasi dependensi.
+> **Kompresi PDF:** Menggunakan Ghostscript WebAssembly di browser dengan preset Ringan (300 DPI), Seimbang (150 DPI), dan Kuat (96 DPI). Ukuran hasil bergantung pada isi dokumen. Penulisan ulang PDF dapat memengaruhi formulir, anotasi, bookmark, aksesibilitas, atau tanda tangan digital; simpan dokumen asli. File PDF tidak dikirim ke server.
+
+> **Lisensi:** Proyek ini menggunakan AGPL-3.0. Mesin Ghostscript dan komponen pihak ketiga memiliki pemberitahuan lisensi masing-masing yang disalin ke `public/licenses/ghostscript/` saat instalasi dependensi.
 
 ## 💻 Menjalankan di Komputer Lokal
 
@@ -131,6 +133,10 @@ Jika integrasi Git aktif, push ke branch dapat menghasilkan Preview Deployment d
 - Batas ukuran PDF saat ini adalah **100 MB per file**.
 - AI Generator membutuhkan Groq API key yang valid.
 - Untuk hasil cetak PDF, gunakan ukuran kertas **A4** dan nonaktifkan header/footer browser.
+
+## ⚖️ Lisensi
+
+Proyek ini dilisensikan berdasarkan **GNU Affero General Public License v3.0 (AGPL-3.0)**. Lihat [LICENSE](./LICENSE) untuk teks lengkap. Jika kamu memodifikasi dan menjalankan versi proyek ini melalui jaringan, AGPL-3.0 memiliki ketentuan untuk menyediakan kode sumber versi yang digunakan kepada penggunanya. Komponen pihak ketiga, termasuk Ghostscript, tetap mengikuti lisensi dan pemberitahuan masing-masing.
 
 ## 🤝 Kontribusi
 
