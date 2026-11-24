@@ -8,14 +8,18 @@ import { PDFDocument } from "pdf-lib";
 import PdfDropzone from "@/components/PdfDropzone";
 import { downloadPdf, formatSize, type PdfItem } from "@/lib/pdf";
 
-declare global {
-  interface Window {
-    pdfjsLib?: {
-      GlobalWorkerOptions: { workerSrc: string };
-      getDocument: (options: { data: Uint8Array }) => { promise: Promise<{ numPages: number; getPage: (n: number) => Promise<{ getViewport: (o: {scale:number}) => {width:number;height:number}; render: (o: {canvas: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D; viewport: {width:number;height:number}}) => {promise: Promise<void>} }> }> };
-    };
-  }
-}
+type PdfJsApi = {
+  GlobalWorkerOptions: { workerSrc: string };
+  getDocument: (options: { data: Uint8Array }) => {
+    promise: Promise<{
+      numPages: number;
+      getPage: (n: number) => Promise<{
+        getViewport: (options: { scale: number }) => { width: number; height: number };
+        render: (options: { canvas: HTMLCanvasElement; canvasContext: CanvasRenderingContext2D; viewport: { width: number; height: number } }) => { promise: Promise<void> };
+      }>;
+    }>;
+  };
+};
 
 type ImageItem = { id: string; name: string; file: File; preview: string };
 
@@ -58,10 +62,10 @@ export default function ConvertPdfPage() {
   }
 
   async function pdfToImages() {
-    if (!pdf || !window.pdfjsLib) return;
+    const pdfjs = (window as unknown as { pdfjsLib?: PdfJsApi }).pdfjsLib;\n    if (!pdf || !pdfjs) return;
     setBusy(true); setError(""); setDone("");
     try {
-      const lib = window.pdfjsLib;
+      const lib = pdfjs;
       lib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
       const doc = await lib.getDocument({ data: new Uint8Array(pdf.bytes) }).promise;
       if (doc.numPages > 30) throw new Error("Untuk menjaga performa, ekspor dibatasi maksimal 30 halaman per proses.");
