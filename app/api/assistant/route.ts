@@ -1,4 +1,4 @@
-import { checkAiRateLimit, readJsonBody } from "@/lib/api-guard.mjs";
+import { consumeRateLimit, getClientKey, readJsonBody } from "@/lib/api-guard.mjs";
 import { generateText } from "ai";
 import { createGroq } from "@ai-sdk/groq";
 
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   if (!apiKey) {
     return Response.json({ error: "Layanan AI belum dikonfigurasi. Tambahkan GROQ_API_KEY di environment server." }, { status: 503 });
   }
-  const limit = checkAiRateLimit(req);
+  const limit = consumeRateLimit(getClientKey(req), 10, 60_000);
   if (!limit.allowed) {
     return Response.json(
       { error: "Terlalu banyak permintaan AI. Coba lagi sebentar." },
@@ -26,10 +26,14 @@ export async function POST(req: Request) {
 
   const parsed = await readJsonBody(req, 300_000);
   if (!parsed.ok) {
-    return Response.json({ error: parsed.error }, { status: parsed.status });
+    const tooLarge = parsed.reason === "too_large";
+    return Response.json(
+      { error: tooLarge ? "Ukuran request terlalu besar." : "Request tidak valid." },
+      { status: tooLarge ? 413 : 400 }
+    );
   }
 
-  const body = parsed.body as { question?: unknown; pages?: unknown; language?: unknown; mode?: unknown };
+  const body = parsed.value as { question?: unknown; pages?: unknown; language?: unknown; mode?: unknown };
 
   if (typeof body.question !== "string" || !body.question.trim()) {
     return Response.json({ error: "Tulis pertanyaan terlebih dahulu." }, { status: 400 });
