@@ -15,7 +15,7 @@ Aplikasi PDF berbasis web dengan AI Generator dan pemrosesan file langsung di br
 
 [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
 [![Groq](https://img.shields.io/badge/AI-Groq-F55036?style=flat-square)](https://groq.com/)
-[![License](https://img.shields.io/badge/License-Not_Specified-lightgrey?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-AGPL--3.0-blue?style=flat-square)](./LICENSE)
 
 <br />
 
@@ -36,7 +36,7 @@ Aplikasi PDF berbasis web dengan AI Generator dan pemrosesan file langsung di br
 | ✨ **AI PDF Generator** | Membuat draf surat, CV, notulen, dan laporan dengan preview ukuran A4. | Groq API |
 | 📚 **Gabung PDF** | Menggabungkan beberapa file PDF dan mengatur urutannya. | Browser |
 | ✂️ **Pisah PDF** | Mengekstrak halaman berdasarkan rentang, contoh `1-3, 5`. | Browser |
-| 🗜️ **Kompres PDF** | Menyimpan ulang struktur PDF dan membersihkan metadata. | Browser |
+| 🗜️ **Kompres PDF** | Mengoptimalkan ulang PDF dan menurunkan resolusi gambar tertanam dengan Ghostscript WebAssembly. | Browser (WASM) |
 | 🔄 **Putar Halaman** | Memutar halaman PDF sebesar 90°, 180°, atau 270°. | Browser |
 
 ## 🛠️ Teknologi yang Digunakan
@@ -64,7 +64,7 @@ Aplikasi PDF berbasis web dengan AI Generator dan pemrosesan file langsung di br
 - API key Groq disimpan sebagai environment variable di sisi server. Jangan gunakan prefix `NEXT_PUBLIC_` untuk secret key.
 - Hindari memasukkan data rahasia atau informasi pribadi sensitif ke dalam prompt AI.
 
-> **Catatan:** Fitur kompresi saat ini mengoptimalkan struktur dan metadata PDF, bukan melakukan kompresi ulang pada gambar tertanam. Karena itu, ukuran hasil tidak selalu lebih kecil.
+> **Kompresi PDF:** Menggunakan Ghostscript WebAssembly di browser dengan preset Ringan (300 DPI), Seimbang (150 DPI), dan Kuat (96 DPI). Ukuran hasil bergantung pada isi dokumen. Penulisan ulang PDF dapat memengaruhi formulir, anotasi, bookmark, aksesibilitas, atau tanda tangan digital; simpan dokumen asli. File PDF tidak dikirim ke server.\n\n> **Lisensi:** Proyek ini menggunakan AGPL-3.0. Mesin Ghostscript dan komponen pihak ketiga memiliki pemberitahuan lisensi masing-masing yang disalin ke `public/licenses/ghostscript/` saat instalasi dependensi.
 
 ## 💻 Menjalankan di Komputer Lokal
 
