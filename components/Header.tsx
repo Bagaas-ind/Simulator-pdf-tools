@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, LayoutGrid, Sparkles, Wrench, FileSearch } from "lucide-react";
+import { Menu, X, LayoutGrid, Sparkles, Wrench, FileSearch, Files, FileImage } from "lucide-react";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 
 const nav = [
   { href: "/alat", label: "Semua alat", icon: LayoutGrid },
-  { href: "/buat-pdf", label: "AI Generator", icon: Sparkles },
+  { href: "/edit-pdf", label: "Edit PDF", icon: Files },
+  { href: "/konversi-pdf", label: "Konversi", icon: FileImage },
   { href: "/ai-pdf", label: "AI Assistant", icon: FileSearch },
-  { href: "/olah-pdf", label: "Olah PDF", icon: Wrench },
+  { href: "/buat-pdf", label: "AI Generator", icon: Sparkles },
 ];
 
 export default function Header() {

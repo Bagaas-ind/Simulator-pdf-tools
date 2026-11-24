@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import ToolCard from "@/components/ToolCard";
 import { tools } from "@/lib/tools";
 
-const filters = ["Semua", "Buat", "Atur halaman", "Optimasi"] as const;
+const filters = ["Semua", "Buat", "Atur halaman", "Konversi", "Optimasi"] as const;
 
 export default function AlatPage() {
   const [filter, setFilter] = useState<(typeof filters)[number]>("Semua");
