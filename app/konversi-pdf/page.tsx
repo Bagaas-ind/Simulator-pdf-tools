@@ -62,7 +62,8 @@ export default function ConvertPdfPage() {
   }
 
   async function pdfToImages() {
-    const pdfjs = (window as unknown as { pdfjsLib?: PdfJsApi }).pdfjsLib;\n    if (!pdf || !pdfjs) return;
+    const pdfjs = (window as unknown as { pdfjsLib?: PdfJsApi }).pdfjsLib;
+    if (!pdf || !pdfjs) return;
     setBusy(true); setError(""); setDone("");
     try {
       const lib = pdfjs;
