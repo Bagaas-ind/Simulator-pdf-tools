@@ -1,3 +1,4 @@
+import { checkAiRateLimit, readJsonBody } from "@/lib/api-guard.mjs";
 import { generateText } from "ai";
 import { createGroq } from "@ai-sdk/groq";
 
@@ -15,16 +16,20 @@ export async function POST(req: Request) {
   if (!apiKey) {
     return Response.json({ error: "Layanan AI belum dikonfigurasi. Tambahkan GROQ_API_KEY di environment server." }, { status: 503 });
   }
-  if (!req.headers.get("content-type")?.includes("application/json")) {
-    return Response.json({ error: "Content-Type harus application/json." }, { status: 415 });
+  const limit = checkAiRateLimit(req);
+  if (!limit.allowed) {
+    return Response.json(
+      { error: "Terlalu banyak permintaan AI. Coba lagi sebentar." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+    );
   }
 
-  let body: { question?: unknown; pages?: unknown; language?: unknown; mode?: unknown };
-  try {
-    body = await req.json();
-  } catch {
-    return Response.json({ error: "Request tidak valid." }, { status: 400 });
+  const parsed = await readJsonBody(req, 300_000);
+  if (!parsed.ok) {
+    return Response.json({ error: parsed.error }, { status: parsed.status });
   }
+
+  const body = parsed.body as { question?: unknown; pages?: unknown; language?: unknown; mode?: unknown };
 
   if (typeof body.question !== "string" || !body.question.trim()) {
     return Response.json({ error: "Tulis pertanyaan terlebih dahulu." }, { status: 400 });
