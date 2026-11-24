@@ -1,77 +1,147 @@
-# Saroka PDF Tools
+<div align="center">
 
-Aplikasi web untuk membuat dan mengelola dokumen PDF dengan antarmuka berbahasa Indonesia. Dibangun menggunakan Next.js App Router, TypeScript, Tailwind CSS, pdf-lib, dan Groq AI.
+# 📄 Saroka PDF Tools
 
-## Live demo
+**Satu tempat untuk membuat, menggabungkan, memisahkan, dan mengelola dokumen PDF.**
 
-https://simulator-pdf-tools.vercel.app/
+Aplikasi PDF berbasis web dengan AI Generator dan pemrosesan file langsung di browser.
 
-## Fitur
+<br />
 
-| Fitur | Keterangan | Pemrosesan |
-|---|---|---|
-| AI PDF Generator | Membuat draf surat, CV, notulen, dan laporan dalam Markdown dengan preview A4 | Teks prompt dikirim ke Groq API |
-| Gabung PDF | Menggabungkan beberapa PDF dan mengatur urutannya | Browser |
-| Pisah PDF | Mengekstrak halaman berdasarkan rentang, misalnya `1-3, 5` | Browser |
-| Kompres PDF | Menyimpan ulang struktur PDF dan membersihkan metadata | Browser |
-| Putar Halaman PDF | Memutar seluruh halaman sebesar 90°, 180°, atau 270° | Browser |
+[![Next.js](https://img.shields.io/badge/Next.js-14.2.15-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-## Privasi dan keamanan
+[![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Groq](https://img.shields.io/badge/AI-Groq-F55036?style=flat-square)](https://groq.com/)
+[![License](https://img.shields.io/badge/License-Not_Specified-lightgrey?style=flat-square)]()
 
-- Operasi gabung, pisah, kompres, dan putar berjalan di browser. File PDF tidak diunggah ke server.
+<br />
+
+### 🚀 [Buka Aplikasi](https://simulator-pdf-tools.vercel.app/)
+
+</div>
+
+---
+
+## ✨ Tentang Proyek
+
+**Saroka PDF Tools** adalah aplikasi web untuk membantu pengguna membuat dan mengelola dokumen PDF melalui satu antarmuka yang sederhana. Aplikasi ini menyediakan AI Generator untuk membantu menyusun dokumen serta berbagai alat manipulasi PDF yang diproses secara lokal di browser.
+
+## 🧰 Fitur Utama
+
+| Fitur | Deskripsi | Pemrosesan |
+|:---|:---|:---:|
+| ✨ **AI PDF Generator** | Membuat draf surat, CV, notulen, dan laporan dengan preview ukuran A4. | Groq API |
+| 📚 **Gabung PDF** | Menggabungkan beberapa file PDF dan mengatur urutannya. | Browser |
+| ✂️ **Pisah PDF** | Mengekstrak halaman berdasarkan rentang, contoh `1-3, 5`. | Browser |
+| 🗜️ **Kompres PDF** | Menyimpan ulang struktur PDF dan membersihkan metadata. | Browser |
+| 🔄 **Putar Halaman** | Memutar halaman PDF sebesar 90°, 180°, atau 270°. | Browser |
+
+## 🛠️ Teknologi yang Digunakan
+
+<div align="center">
+
+| Teknologi | Kegunaan |
+|:---|:---|
+| ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white) | Framework aplikasi web (App Router) |
+| ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) | Library antarmuka pengguna |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Bahasa pemrograman utama |
+| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) | Styling antarmuka |
+| ![pdf-lib](https://img.shields.io/badge/pdf--lib-PDF_Tools-DC2626?style=flat-square) | Manipulasi dokumen PDF |
+| ![Groq](https://img.shields.io/badge/Groq_AI-F55036?style=flat-square) | AI text generation |
+| ![Vercel](https://img.shields.io/badge/Vercel_AI_SDK-000000?style=flat-square&logo=vercel&logoColor=white) | Integrasi AI SDK |
+| ![Lucide](https://img.shields.io/badge/Lucide_React-F56565?style=flat-square) | Ikon antarmuka |
+
+</div>
+
+## 🔐 Privasi dan Keamanan
+
+- Operasi gabung, pisah, kompres, dan putar PDF berjalan langsung di browser. File PDF tidak diunggah ke server untuk operasi tersebut.
 - File PDF divalidasi melalui ekstensi, ukuran, signature `%PDF-`, dan kemampuan parser untuk membukanya.
-- AI Generator hanya mengirim teks instruksi ke endpoint server yang meneruskan permintaan ke Groq. Jangan masukkan data rahasia atau informasi pribadi sensitif.
-- Kunci API Groq hanya disimpan sebagai environment variable server, tidak boleh menggunakan prefix `NEXT_PUBLIC_`.
-- Kompresi saat ini mengoptimalkan struktur dan metadata; bukan kompresi ulang gambar tertanam. Hasilnya tidak selalu lebih kecil.
+- AI Generator mengirimkan teks instruksi ke endpoint server yang meneruskan permintaan ke Groq API.
+- API key Groq disimpan sebagai environment variable di sisi server. Jangan gunakan prefix `NEXT_PUBLIC_` untuk secret key.
+- Hindari memasukkan data rahasia atau informasi pribadi sensitif ke dalam prompt AI.
 
-## Tech stack
+> **Catatan:** Fitur kompresi saat ini mengoptimalkan struktur dan metadata PDF, bukan melakukan kompresi ulang pada gambar tertanam. Karena itu, ukuran hasil tidak selalu lebih kecil.
 
-- Next.js 14 / App Router
-- React 18 dan TypeScript
-- Tailwind CSS
-- pdf-lib untuk manipulasi PDF di browser
-- Vercel AI SDK dan Groq API untuk pembuatan teks
-- Lucide React untuk ikon
+## 💻 Menjalankan di Komputer Lokal
 
-## Menjalankan secara lokal
+### Persyaratan
 
-Persyaratan: Node.js 18+ dan npm.
+- [Node.js](https://nodejs.org/) versi 18 atau lebih baru
+- npm
+- Groq API Key untuk menggunakan AI Generator
+
+### 1. Clone repository
 
 ```bash
 git clone https://github.com/Bagaas-ind/Simulator-pdf-tools.git
 cd Simulator-pdf-tools
+```
+
+### 2. Install dependencies
+
+```bash
 npm install
 ```
 
-Buat file `.env.local` di root project:
+### 3. Atur environment variable
+
+Buat file bernama `.env.local` di direktori utama proyek:
 
 ```env
 GROQ_API_KEY=your_groq_api_key
-# Opsional
+
+# Opsional: model Groq yang ingin digunakan
 GROQ_MODEL=openai/gpt-oss-120b
 ```
 
-Jalankan development server:
+Ganti `your_groq_api_key` dengan API key milikmu.
+
+### 4. Jalankan development server
 
 ```bash
 npm run dev
 ```
 
-Buka http://localhost:3000.
+Buka [http://localhost:3000](http://localhost:3000) melalui browser.
 
-Untuk memeriksa build produksi:
+### 5. Build untuk production
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Deployment
+## ☁️ Deployment
 
-Project dapat dihubungkan ke Vercel melalui GitHub. Set `GROQ_API_KEY` dan, bila diperlukan, `GROQ_MODEL` pada Project Settings → Environment Variables. Push ke branch akan menghasilkan Preview Deployment jika Git integration aktif; merge ke production branch akan memicu deployment produksi.
+Proyek dapat di-deploy melalui [Vercel](https://vercel.com/) dengan menghubungkan repository GitHub.
 
-## Catatan
+Tambahkan environment variable berikut pada **Project Settings → Environment Variables**:
 
-- Batas ukuran PDF saat ini 100 MB per file.
-- AI Generator membutuhkan API key Groq yang valid.
-- Hasil PDF yang dibuat melalui tombol cetak browser sebaiknya disimpan dengan ukuran kertas A4 dan header/footer browser dinonaktifkan.
+- `GROQ_API_KEY` — wajib untuk AI Generator.
+- `GROQ_MODEL` — opsional untuk menentukan model Groq.
+
+Jika integrasi Git aktif, push ke branch dapat menghasilkan Preview Deployment dan perubahan pada production branch dapat memicu deployment produksi.
+
+## 📝 Catatan
+
+- Batas ukuran PDF saat ini adalah **100 MB per file**.
+- AI Generator membutuhkan Groq API key yang valid.
+- Untuk hasil cetak PDF, gunakan ukuran kertas **A4** dan nonaktifkan header/footer browser.
+
+## 🤝 Kontribusi
+
+Ide, masukan, dan laporan bug sangat terbuka. Silakan buat [Issue](https://github.com/Bagaas-ind/Simulator-pdf-tools/issues) atau ajukan Pull Request jika ingin berkontribusi.
+
+---
+
+<div align="center">
+
+Dibuat dengan ☕ dan semangat belajar.
+
+**Saroka PDF Tools**
+
+</div>
