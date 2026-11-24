@@ -140,7 +140,6 @@ Ide, masukan, dan laporan bug sangat terbuka. Silakan buat [Issue](https://githu
 
 <div align="center">
 
-Dibuat dengan ☕ dan semangat belajar.
 
 **Saroka PDF Tools**
 
