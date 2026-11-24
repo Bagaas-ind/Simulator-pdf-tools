@@ -113,16 +113,97 @@ export async function extractPages(item: PdfItem, indices: number[]): Promise<Ui
   return out.save();
 }
 
-/** Kompres ringan: re-save dengan object streams, buang metadata. */
-export async function compressPdf(item: PdfItem): Promise<Uint8Array> {
-  const doc = await PDFDocument.load(item.bytes);
-  doc.setTitle("");
-  doc.setAuthor("");
-  doc.setSubject("");
-  doc.setKeywords([]);
-  doc.setProducer("");
-  doc.setCreator("");
-  return doc.save({ useObjectStreams: true, addDefaultPage: false });
+export type CompressionPreset = "light" | "balanced" | "strong";
+
+const COMPRESSION_PRESETS: Record<
+  CompressionPreset,
+  { pdfSettings: string; colorDpi: number; grayDpi: number; monoDpi: number }
+> = {
+  light: { pdfSettings: "/printer", colorDpi: 300, grayDpi: 300, monoDpi: 600 },
+  balanced: { pdfSettings: "/ebook", colorDpi: 150, grayDpi: 150, monoDpi: 300 },
+  strong: { pdfSettings: "/screen", colorDpi: 96, grayDpi: 96, monoDpi: 200 },
+};
+
+/**
+ * Compresses embedded PDF images with Ghostscript WebAssembly.
+ * The engine runs in an isolated browser worker; PDF bytes are not uploaded.
+ */
+export async function compressPdf(
+  item: PdfItem,
+  preset: CompressionPreset = "balanced"
+): Promise<Uint8Array> {
+  const settings = COMPRESSION_PRESETS[preset];
+  if (!settings) throw new Error("Preset kompresi tidak dikenal.");
+
+  // This import is intentionally lazy: the WASM engine is loaded only when the
+  // user starts compression, not on every visit to the PDF tools page.
+  const { load } = await import("@wasm-zoo/ghostscript");
+  const gs = await load();
+
+  try {
+    const outputPath = "/out/compressed.pdf";
+    const result = await gs.exec(
+      [
+        "-dSAFER",
+        "-dBATCH",
+        "-dNOPAUSE",
+        "-dQUIET",
+        "-sDEVICE=pdfwrite",
+        "-dCompatibilityLevel=1.7",
+        `-dPDFSETTINGS=${settings.pdfSettings}`,
+        "-dDetectDuplicateImages=true",
+        "-dCompressFonts=true",
+        "-dSubsetFonts=true",
+        "-dDownsampleColorImages=true",
+        "-dColorImageDownsampleType=/Bicubic",
+        `-dColorImageResolution=${settings.colorDpi}`,
+        "-dDownsampleGrayImages=true",
+        "-dGrayImageDownsampleType=/Bicubic",
+        `-dGrayImageResolution=${settings.grayDpi}`,
+        "-dDownsampleMonoImages=true",
+        "-dMonoImageDownsampleType=/Subsample",
+        `-dMonoImageResolution=${settings.monoDpi}`,
+        "-sOutputFile=" + outputPath,
+        "/in/source.pdf",
+      ],
+      {
+        files: [{ name: "/in/source.pdf", data: item.bytes }],
+        dirs: ["/out"],
+        outputs: [outputPath],
+      }
+    );
+
+    if (result.exitCode !== 0) {
+      throw new Error(result.stderr?.trim() || "Ghostscript gagal memproses PDF.");
+    }
+
+    const outputFile = result.files.find((file) => file.name === outputPath);
+    if (!outputFile?.data?.length) {
+      throw new Error("Mesin kompresi tidak menghasilkan file PDF.");
+    }
+
+    const output = new Uint8Array(outputFile.data);
+    if (
+      output.length < 5 ||
+      output[0] !== 0x25 ||
+      output[1] !== 0x50 ||
+      output[2] !== 0x44 ||
+      output[3] !== 0x46 ||
+      output[4] !== 0x2d
+    ) {
+      throw new Error("Hasil kompresi bukan file PDF yang valid.");
+    }
+
+    // Re-open the result and ensure the page count has not changed.
+    const validated = await PDFDocument.load(output);
+    if (validated.getPageCount() !== item.pages) {
+      throw new Error("Jumlah halaman berubah setelah kompresi; hasil ditolak.");
+    }
+
+    return output;
+  } finally {
+    gs.dispose();
+  }
 }
 
 
