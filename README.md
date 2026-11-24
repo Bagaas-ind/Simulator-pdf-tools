@@ -62,6 +62,7 @@ Aplikasi PDF berbasis web dengan AI Generator dan pemrosesan file langsung di br
 - File PDF divalidasi melalui ekstensi, ukuran, signature `%PDF-`, dan kemampuan parser untuk membukanya.
 - AI Generator mengirimkan teks instruksi ke endpoint server yang meneruskan permintaan ke Groq API.
 - API key Groq disimpan sebagai environment variable di sisi server. Jangan gunakan prefix `NEXT_PUBLIC_` untuk secret key.
+- Endpoint AI membatasi ukuran body request dan menerapkan batas awal 10 permintaan per menit per alamat IP per instance, dengan respons `429` dan `Retry-After` saat limit tercapai. Pada deployment multi-instance/serverless, limiter memori ini bukan batas global; gunakan penyimpanan bersama (misalnya Redis/Upstash) dan verifikasi konfigurasi proxy/IP platform sebelum mengandalkannya sebagai proteksi abuse.
 - Hindari memasukkan data rahasia atau informasi pribadi sensitif ke dalam prompt AI.
 
 > **Kompresi PDF:** Menggunakan Ghostscript WebAssembly di browser dengan preset Ringan (300 DPI), Seimbang (150 DPI), dan Kuat (96 DPI). Ukuran hasil bergantung pada isi dokumen. Penulisan ulang PDF dapat memengaruhi formulir, anotasi, bookmark, aksesibilitas, atau tanda tangan digital; simpan dokumen asli. File PDF tidak dikirim ke server.
